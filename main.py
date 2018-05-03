@@ -16,19 +16,12 @@ def download(url, file_path, timeout=10):
 
     block_size = 1024 * 100  # 1kb
     tmp_file_path = file_path + ".part"
-
-    # tmp file
-    print("\nRemote URL: " + str(url))
-    first_byte = os.path.getsize(tmp_file_path) if os.path.exists(tmp_file_path) else 0
-    print("Downloading with urllib from Byte " + str(first_byte))
-
     file_size = -1
 
     try:
         redirect_count = 0
         while True:
             first_response = urllib.request.urlopen(url)
-            print(first_response.info())
             if first_response.getcode() >= 400:
                 raise Exception("Server has returned an error: %s" % first_response.getcode())
             elif first_response.getcode() >= 300:
@@ -39,6 +32,11 @@ def download(url, file_path, timeout=10):
                     raise Exception("Too many times of redirection. ")
             else:
                 break
+
+        # tmp file
+        print("\nRemote URL: " + str(url))
+        first_byte = os.path.getsize(tmp_file_path) if os.path.exists(tmp_file_path) else 0
+        print("Downloading with urllib from Byte " + str(first_byte))
 
         file_size = int(first_response.info().get("Content-Length", -1))
         print("File size: " + str(file_size) + "\n")
