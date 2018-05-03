@@ -31,7 +31,7 @@ def download(url, file_path, timeout=10):
             print(first_response.info())
             if first_response.getcode() >= 400:
                 raise Exception("Server has returned an error: %s" % first_response.getcode())
-            elif first_response.getcode >= 300:
+            elif first_response.getcode() >= 300:
                 if redirect_count < 20:
                     url = first_response.geturl()
                     redirect_count += 1
