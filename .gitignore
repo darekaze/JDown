@@ -164,6 +164,7 @@ hs_err_pid*
 
 # User-specific stuff
 .idea/
+resumable-java-version/.idea/
 
 # CMake
 cmake-build-debug/
