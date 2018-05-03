@@ -5,7 +5,19 @@ import urllib.error
 import urllib.request
 
 
-def download(url, file_path, timeout=10):
+class NoRedirection(urllib.request.HTTPErrorProcessor):
+    def http_response(self, request, response):
+        return response
+    https_response = http_response
+
+
+opener = urllib.request.build_opener(NoRedirection)
+
+
+def download(url="http://158.132.255.107:25003/project/team1.txt", file_path=None, timeout=10):
+
+    if file_path is None:
+        file_path = "./" + url.split("/").pop()
 
     if os.path.exists(file_path):
         print("File \"" + file_path.split("/").pop() + "\" already existed!")
@@ -22,8 +34,12 @@ def download(url, file_path, timeout=10):
     try:
         redirect_count = 0
         while True:
-            first_response = urllib.request.urlopen(url)
-            if first_response.getcode() >= 300:
+            first_response = opener.open(urllib.request.Request(url, method="HEAD"))
+            if first_response.getcode() >= 400:
+                print("Server returned an error! Error code: " + str(first_response.getcode()))
+                return
+            elif first_response.getcode() >= 300:
+                print(first_response.getcode())
                 if redirect_count < 20:
                     url = first_response.geturl()
                     redirect_count += 1
@@ -47,12 +63,12 @@ def download(url, file_path, timeout=10):
                     "Group": 1
                 }
                 req = urllib.request.Request(url, headers=headers)
-                page = urllib.request.urlopen(req, timeout=timeout).read()
+                page = opener.open(req, timeout=timeout).read()
                 print("OK")
                 with open(tmp_file_path, "ab") as f:
                     f.write(page)
             except Exception as e:
-                print("Caught Error: " + str(e))
+                print("Caught error: " + str(e))
                 print("Retry...")
         else:
             while first_byte < file_size:
@@ -68,7 +84,7 @@ def download(url, file_path, timeout=10):
                         "Group": 1
                     }
                     req = urllib.request.Request(url, headers=headers)
-                    page = urllib.request.urlopen(req, timeout=timeout).read()
+                    page = opener.open(req, timeout=timeout).read()
                     print("OK")
 
                     with open(tmp_file_path, "ab") as f:
@@ -97,4 +113,4 @@ def download(url, file_path, timeout=10):
 
 
 print("Resumable HTTP Downloader\nGroup 1, COMP2322, PolyU\n")
-download("http://158.132.255.107:25003/project/team1.txt", "./team1.txt")
+download()
