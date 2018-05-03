@@ -22,14 +22,14 @@ java team1.downloader.AppMain "<url>" <path>
 
 <s>`./JDown "<url>" <path>`</s>
 
-### Just copy this for testing - downloading node.js .msi package
+### Use this for testing - downloading node.js .msi package
 
 ```
-java team1.downloader.AppMain "https://nodejs.org/dist/v8.11.1/node-v8.11.1-x64.msi" D:\any-path
+java team1.downloader.AppMain "https://nodejs.org/dist/v8.11.1/node-v8.11.1-linux-x64.tar.xz" /home/darekaze/Downloads
 ```
 
 #### Known issues:
 
 1. RenameFile does not work in Win10 root directory.
 2. RenameFile does not rename newly downloaded file in Win 10 (IntelliJ and Linux don't have this issue). However, it can rename and overwrite if the fileName existed. 
-3. Use Linux tks XD >> <s>Fuck Windows</s>
+3. Use Linux tks XD >> <s>F\**k Windows</s>
