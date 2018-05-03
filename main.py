@@ -23,9 +23,7 @@ def download(url, file_path, timeout=10):
         redirect_count = 0
         while True:
             first_response = urllib.request.urlopen(url)
-            if first_response.getcode() >= 400:
-                raise Exception("Server has returned an error: %s" % first_response.getcode())
-            elif first_response.getcode() >= 300:
+            if first_response.getcode() >= 300:
                 if redirect_count < 20:
                     url = first_response.geturl()
                     redirect_count += 1
@@ -81,7 +79,7 @@ def download(url, file_path, timeout=10):
                     print("Retry...")
 
     except urllib.error.HTTPError as e:
-        print("Error! Code:", str(e.code))
+        print("Server returned an error! Code:", str(e.code))
     except urllib.error.URLError as e:
         print("Error! Reason:", e.reason)
     except Exception as e:
