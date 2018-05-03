@@ -19,8 +19,8 @@ java team1.downloader.AppMain "<url>" <path>
 
 ### Below is a short test for downloading node.js .msi package
 
-- Please create the directory "D:\test-path" yourself, since I didn't implement auto directory creation.
+- Known issues: RenameFile does not work in root directory
 
 ```
-java team1.downloader.AppMain "https://nodejs.org/dist/v8.11.1/node-v8.11.1-x64.msi" D:\test-path
+java team1.downloader.AppMain "https://nodejs.org/dist/v8.11.1/node-v8.11.1-x64.msi" D:\any-path
 ```
