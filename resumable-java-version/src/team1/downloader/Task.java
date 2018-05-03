@@ -17,6 +17,8 @@ class Task {
         this.location = location;
         if (new File(location).isDirectory()) {
             this.location = location + File.separator + getFileName(url);
+        } else if(new File(location).mkdir()){
+            this.location = location + File.separator + getFileName(url);
         }
         this.file = new File(this.location + ".tmp");
     }
