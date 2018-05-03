@@ -210,3 +210,6 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# ignore out
+resumable-java-version/out
+resumable-java-version/.idea
