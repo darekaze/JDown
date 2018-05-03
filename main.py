@@ -1,7 +1,8 @@
 # Python 2 code, compatible with Python 3
-import urllib.request
 import os
 import shutil
+import urllib.error
+import urllib.request
 
 
 def download(url, file_path, timeout=10):
@@ -79,15 +80,20 @@ def download(url, file_path, timeout=10):
                     print("Caught Error: " + str(e))
                     print("Retry...")
 
+    except urllib.error.HTTPError as e:
+        print("Error! Code:", str(e.code))
+    except urllib.error.URLError as e:
+        print("Error! Reason:", e.reason)
     except Exception as e:
+        print('Unexpected error!')
         print(e)
     finally:
         # rename the temp download file to the correct name if fully downloaded
-        if file_size == os.path.getsize(tmp_file_path):
+        if file_size == -1:
+            pass
+        elif file_size == os.path.getsize(tmp_file_path):
             shutil.move(tmp_file_path, file_path)
             print("\nCompleted. ")
-        elif file_size == -1:
-            raise Exception("Error getting Content-Length from server: %s" % url)
 
     return
 
