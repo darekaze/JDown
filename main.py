@@ -25,31 +25,61 @@ def download(url, file_path, timeout=10):
     file_size = -1
 
     try:
-        file_size = int(urllib.request.urlopen(url).info().get("Content-Length", -1))
+        redirect_count = 0
+        while True:
+            first_response = urllib.request.urlopen(url)
+            print(first_response.info())
+            if first_response.getcode() >= 400:
+                raise Exception("Server has returned an error: %s" % first_response.getcode())
+            elif first_response.getcode >= 300:
+                if redirect_count < 20:
+                    url = first_response.geturl()
+                    redirect_count += 1
+                else:
+                    raise Exception("Too many times of redirection. ")
+            else:
+                break
+
+        file_size = int(first_response.info().get("Content-Length", -1))
         print("File size: " + str(file_size) + "\n")
 
-        while first_byte < file_size:
+        if first_response.info().get("Accept-Ranges", "none") == "none":
             try:
-                if first_byte + block_size - 1 >= file_size:
-                    last_byte = file_size
-                else:
-                    last_byte = first_byte + block_size - 1
-
-                print("Downloading from Byte " + str(first_byte) + " to Byte " + str(last_byte) + '... ', end='')
+                print("Downloading... ", end="")
                 headers = {
-                    "Range": "bytes=%s-%s" % (first_byte, last_byte),
                     "Group": 1
                 }
                 req = urllib.request.Request(url, headers=headers)
                 page = urllib.request.urlopen(req, timeout=timeout).read()
                 print("OK")
-
                 with open(tmp_file_path, "ab") as f:
                     f.write(page)
-                first_byte = last_byte + 1
             except Exception as e:
-                print("Caught Error" + str(e))
+                print("Caught Error: " + str(e))
                 print("Retry...")
+        else:
+            while first_byte < file_size:
+                try:
+                    if first_byte + block_size - 1 >= file_size:
+                        last_byte = file_size
+                    else:
+                        last_byte = first_byte + block_size - 1
+
+                    print("Downloading from Byte " + str(first_byte) + " to Byte " + str(last_byte) + '... ', end='')
+                    headers = {
+                        "Range": "bytes=%s-%s" % (first_byte, last_byte),
+                        "Group": 1
+                    }
+                    req = urllib.request.Request(url, headers=headers)
+                    page = urllib.request.urlopen(req, timeout=timeout).read()
+                    print("OK")
+
+                    with open(tmp_file_path, "ab") as f:
+                        f.write(page)
+                    first_byte = last_byte + 1
+                except Exception as e:
+                    print("Caught Error: " + str(e))
+                    print("Retry...")
 
     except Exception as e:
         print(e)
