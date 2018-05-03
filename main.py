@@ -1,8 +1,10 @@
-# Python 2 code, compatible with Python 3
+# compatible with Python 3
 import os
 import shutil
 import urllib.error
 import urllib.request
+
+size_unit = ("B", "KB", "MB", "GB", "TB")
 
 
 class NoRedirection(urllib.request.HTTPErrorProcessor):
@@ -17,17 +19,20 @@ opener = urllib.request.build_opener(NoRedirection)
 def download(url="http://158.132.255.107:25003/project/team1.txt", file_path=None, timeout=10):
 
     if file_path is None:
-        file_path = "./" + url.split("/").pop()
+        remote_filename = url.split("/")[-1].split("?")[0]
+        if remote_filename == "":
+            remote_filename = "index"
+        file_path = "./" + remote_filename
 
     if os.path.exists(file_path):
-        print("File \"" + file_path.split("/").pop() + "\" already existed!")
+        print("File \"" + file_path.split("/")[-1] + "\" already existed!")
         if input('Do you want to delete and re-download it [Y/N]? ').lower() != 'y':
             print("The program is exiting according to your instruction. ")
             return
         else:
             os.remove(file_path)
 
-    block_size = 1024 * 100  # 1kb
+    block_size = 1024 * 100  # 100KB
     tmp_file_path = file_path + ".part"
     file_size = -1
 
@@ -39,7 +44,6 @@ def download(url="http://158.132.255.107:25003/project/team1.txt", file_path=Non
                 print("Server returned an error! Error code: " + str(first_response.getcode()))
                 return
             elif first_response.getcode() >= 300:
-                print(first_response.getcode())
                 if redirect_count < 20:
                     url = first_response.geturl()
                     redirect_count += 1
@@ -50,26 +54,30 @@ def download(url="http://158.132.255.107:25003/project/team1.txt", file_path=Non
 
         # tmp file
         print("\nRemote URL: " + str(url))
-        first_byte = os.path.getsize(tmp_file_path) if os.path.exists(tmp_file_path) else 0
-        print("Downloading with urllib from Byte " + str(first_byte))
 
         file_size = int(first_response.info().get("Content-Length", -1))
-        print("File size: " + str(file_size) + "\n")
+        readable_size = file_size
+        readable_size_unit = 0
+        while readable_size >= 1000:
+            readable_size /= 1024
+            readable_size_unit += 1
+        readable_size = str(round(readable_size, 2)) + " " + size_unit[readable_size_unit]
+        print("File size: " + readable_size)
+
+        first_byte = os.path.getsize(tmp_file_path) if os.path.exists(tmp_file_path) else 0
+        print("Downloading with urllib...\n")
+
 
         if first_response.info().get("Accept-Ranges", "none") == "none":
-            try:
-                print("Downloading... ", end="")
-                headers = {
-                    "Group": 1
-                }
-                req = urllib.request.Request(url, headers=headers)
-                page = opener.open(req, timeout=timeout).read()
-                print("OK")
-                with open(tmp_file_path, "ab") as f:
-                    f.write(page)
-            except Exception as e:
-                print("Caught error: " + str(e))
-                print("Retry...")
+            print("Downloading... ", end="")
+            headers = {
+                "Group": 1
+            }
+            req = urllib.request.Request(url, headers=headers)
+            page = opener.open(req, timeout=timeout).read()
+            print("OK")
+            with open(tmp_file_path, "ab") as f:
+                f.write(page)
         else:
             while first_byte < file_size:
                 try:
@@ -85,7 +93,7 @@ def download(url="http://158.132.255.107:25003/project/team1.txt", file_path=Non
                     }
                     req = urllib.request.Request(url, headers=headers)
                     page = opener.open(req, timeout=timeout).read()
-                    print("OK")
+                    print(str(round(last_byte * 100 / file_size, 2)) + "%")
 
                     with open(tmp_file_path, "ab") as f:
                         f.write(page)
