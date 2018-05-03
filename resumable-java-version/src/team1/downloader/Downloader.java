@@ -6,12 +6,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 class Downloader {
-
     private final ExecutorService executor;
-
     private final HashMap<Task, Future> downloads = new HashMap<>();
     private final Protocol protocol;
-
 
     Downloader(Protocol protocol, ExecutorService executor) {
         this.protocol = protocol;

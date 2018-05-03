@@ -47,7 +47,6 @@ public class ProtocolHttp implements Protocol {
             connection.setRequestProperty("Range", getRangeHeader(totalBytesRead));
             int responseCode = connection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_PARTIAL) {
-
                 long totalSize = totalBytesRead + connection.getContentLengthLong();
                 InputStream inputStream = connection.getInputStream();
                 outputStream = new FileOutputStream(task.getFile(), true);
@@ -67,12 +66,11 @@ public class ProtocolHttp implements Protocol {
         } finally {
             if (connection != null)
                 connection.disconnect();
-            if (outputStream != null)
-                try {
-                    outputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            if (outputStream != null) try {
+                outputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

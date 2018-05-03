@@ -5,7 +5,6 @@ public class Entries {
     private final String location;
 
     public Entries(String url, String location) {
-
         this.url = url;
         this.location = location;
     }

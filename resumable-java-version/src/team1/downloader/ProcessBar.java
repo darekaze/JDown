@@ -1,7 +1,6 @@
 package team1.downloader;
 
 public class ProcessBar implements Processor {
-
     private StringBuilder messages = new StringBuilder();
 
     @Override
@@ -21,19 +20,16 @@ public class ProcessBar implements Processor {
         }
         messages = new StringBuilder();
         messages.append("[");
-
-        int processBarWidth = 20;
+        final int processBarWidth = 20;
         for (int i = 1; i <= processBarWidth; i++) {
             if (status.getDownloadedSize() * processBarWidth / status.getTotalSize() >= i)
                 messages.append("=");
             else
                 messages.append(".");
         }
-
         messages.append("] ");
         messages.append(Math.round(status.getDownloadedSize() / 1024)).append("/").append(Math.round(status.getTotalSize() / 1024)).append(" KB ");
         messages.append("Enter '").append(ProcessController.getPause()).append("' to pause ");
-
         System.out.print(messages.toString());
     }
 }

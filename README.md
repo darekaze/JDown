@@ -22,7 +22,7 @@ java team1.downloader.AppMain "<url>" <path>
 
 <s>`./JDown "<url>" <path>`</s>
 
-### Use this for testing - downloading node.js .msi package
+### Use this for testing - downloading node.js package
 
 ```
 java team1.downloader.AppMain "https://nodejs.org/dist/v8.11.1/node-v8.11.1-linux-x64.tar.xz" /home/darekaze/Downloads
@@ -30,6 +30,12 @@ java team1.downloader.AppMain "https://nodejs.org/dist/v8.11.1/node-v8.11.1-linu
 
 #### Known issues:
 
-1. RenameFile does not work in Win10 root directory.
-2. RenameFile does not rename newly downloaded file in Win 10 (IntelliJ and Linux don't have this issue). However, it can rename and overwrite if the fileName existed. 
-3. Use Linux tks XD >> <s>F\**k Windows</s>
+1. RenameFile does not work in root directory.
+2. <s>RenameFile does not rename newly downloaded file in Win 10 (IntelliJ and Linux don't have this issue). However, it can rename and overwrite if the fileName existed.</s> \[***Solved by adding compatability***]
+
+Use Linux tks XD >> <s>still F\**k Windows</s>
+
+#### Things can consider improve:
+
+1. Make the controller key to Key Pressed Listener (if possible)
+2. Build it with grandle (instead of .jar)

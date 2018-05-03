@@ -12,7 +12,9 @@ public class RenameParser {
     public void renameFile() {
         String formattedName = this.file.getName().replace(".tmp", "").trim();
         Path source = this.file.toPath();
+        File nf = new File(this.file.getParent() + File.separator + formattedName);
         try {
+            nf.createNewFile(); // For the sake of windows
             Files.move(source, source.resolveSibling(formattedName), REPLACE_EXISTING);
         } catch (IOException e) {
             e.printStackTrace();
