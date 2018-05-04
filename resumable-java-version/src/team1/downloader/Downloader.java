@@ -47,7 +47,8 @@ class Downloader {
     }
 
     private void onError(Task entry, String message){
-        System.out.println("Failed to download file. " + message);
+        System.out.println("Failed to download file -- " + message);
         entry.getStatus().failed();
     }
+
 }

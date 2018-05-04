@@ -18,10 +18,10 @@ class ProcessController {
                     char action = buffer[0];
                     if (action == PAUSE && !downloader.isPaused(task)) {
                         downloader.pause(task);
-                        System.out.println("Enter '" + RESUME + "' to resume.");
+                        System.out.print("\033[2K" + "---Paused--- "); // Not for cmd
                     } else if (action == RESUME && downloader.isPaused(task)) {
                         downloader.resume(task);
-                        formatLine();
+                        deleteLine(2); // Not for cmd
                     }
                 }
             }
@@ -35,9 +35,12 @@ class ProcessController {
         }
     }
 
-    private static void formatLine() {
+    /* Delete console line does not work with windows cmd or PowerShell.
+       Recommend to use bash or zsh for better visual effect.
+       If use cmd, please comment the 'Not for cmd' lines in listenForCommands() to avoid bad visual outputs. */
+    private static void deleteLine(int count) {
         System.out.print("\033[2K");
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < count; i++) {
             System.out.print(String.format("\033[%dA", 1));
             System.out.print("\033[2K");
         }
@@ -45,5 +48,9 @@ class ProcessController {
 
     public static char getPause(){
         return PAUSE;
+    }
+
+    public static char getResume() {
+        return RESUME;
     }
 }

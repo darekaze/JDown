@@ -24,10 +24,10 @@ public class ProtocolHttp implements Protocol {
                 try {
                     downloadFromUrl(task, e.getLocation());
                 } catch (UnexpectedResponseException e1) {
-                    onError(task, "Could not download file from : " + e.getLocation());
+                    onError(task, "Unable to download the file from: " + e.getLocation());
                 }
             } else {
-                onError(task, "Could not download file. Received response code: " + e.getResponseCode());
+                onError(task, "Error in downloading the file. Response code: " + e.getResponseCode());
             }
         }
     }

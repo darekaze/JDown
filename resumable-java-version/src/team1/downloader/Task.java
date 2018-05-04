@@ -6,7 +6,7 @@ import java.io.File;
 import java.util.Optional;
 
 class Task {
-    private static final String DEFAULT_FILE_NAME = "download";
+    private static final String DEFAULT_FILE_NAME = "unnamed_download";
     private final String url;
     private String location;
     private final File file;

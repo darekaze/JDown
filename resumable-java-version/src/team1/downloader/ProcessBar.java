@@ -7,7 +7,7 @@ public class ProcessBar implements Processor {
     public void onProgress(Task task) {
         if (task.getStatus().isComplete()) {
             printProgress(task);
-            System.out.println("\nFile downloaded successfully at " + task.getLocation());
+            System.out.println("\nFile downloaded successfully! Saved at: " + task.getLocation() + "\n");
         } else {
             printProgress(task);
         }
@@ -15,7 +15,7 @@ public class ProcessBar implements Processor {
 
     private void printProgress(Task task) {
         TaskStatus status = task.getStatus();
-        for (int i = 0; i < messages.length() + 5; i++) {
+        for (int i = 0; i < messages.length() + 10; i++) {
             System.out.print("\b");
         }
         messages = new StringBuilder();
@@ -23,13 +23,12 @@ public class ProcessBar implements Processor {
         final int processBarWidth = 20;
         for (int i = 1; i <= processBarWidth; i++) {
             if (status.getDownloadedSize() * processBarWidth / status.getTotalSize() >= i)
-                messages.append("=");
+                messages.append("#");
             else
                 messages.append(".");
         }
         messages.append("] ");
         messages.append(Math.round(status.getDownloadedSize() / 1024)).append("/").append(Math.round(status.getTotalSize() / 1024)).append(" KB ");
-        messages.append("Enter '").append(ProcessController.getPause()).append("' to pause ");
         System.out.print(messages.toString());
     }
 }
