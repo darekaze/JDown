@@ -21,6 +21,7 @@ class Downloader {
                 try {
                     protocol.download(entry);
                 } catch (IOException e) {
+                    System.out.println("Download failed");
                     onError(entry, e.getMessage());
                 }
             }));
@@ -37,6 +38,7 @@ class Downloader {
                 try {
                     protocol.download(entry);
                 } catch (IOException e) {
+                    System.out.println("Resume failed");
                     onError(entry, e.getMessage());
                 }
             }));
