@@ -18,7 +18,7 @@ class AppMain {
             Entries entries = new CommandParser().parse(args);
             System.out.println("\nDownloading from " + entries.getUrl());
             System.out.println("\n[" + ProcessController.getPause() + "]+[Enter]-> Pause; "
-                            + "[" + ProcessController.getResume()+ "]+[Enter]-> Resume;");
+                            + "[" + ProcessController.getResume()+ "]+[Enter]-> Resume; ");
 
             ExecutorService executor = Executors.newCachedThreadPool();
             Downloader downloader = new Downloader(protocol, executor);

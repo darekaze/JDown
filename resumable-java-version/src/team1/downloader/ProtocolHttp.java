@@ -13,6 +13,7 @@ import java.util.List;
 
 public class ProtocolHttp implements Protocol {
     private static final int BUFFER_SIZE = 4096;
+    private static final int SOCKET_TIMEOUT = 15000;
     private final List<Processor> processors = new ArrayList<>();
 
     @Override
@@ -43,8 +44,8 @@ public class ProtocolHttp implements Protocol {
 
         try {
             connection = (HttpURLConnection) new URL(url).openConnection();
-            connection.setConnectTimeout(15000); // 15 sec for connection
-            connection.setReadTimeout(10000); // 10 sec for data receiving
+            connection.setConnectTimeout(SOCKET_TIMEOUT);
+            connection.setReadTimeout(SOCKET_TIMEOUT);
             long totalBytesRead = task.getFile().length();
             connection.setRequestProperty("Range", getRangeHeader(totalBytesRead));
             connection.setRequestProperty("Group", "1");

@@ -5,7 +5,7 @@ public class UnexpectedResponseException extends Throwable{
     private final int responseCode;
 
     public UnexpectedResponseException(int responseCode, String location) {
-        super("Could not connect. status code : " + responseCode);
+        super("Cannot connect. Status code : " + responseCode);
         this.responseCode = responseCode;
         this.location = location;
     }
