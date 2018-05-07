@@ -21,7 +21,6 @@ class Downloader {
                 try {
                     protocol.download(entry);
                 } catch (IOException e) {
-                    System.out.println("Download failed");
                     onError(entry, e.getMessage());
                 }
             }));
@@ -38,7 +37,6 @@ class Downloader {
                 try {
                     protocol.download(entry);
                 } catch (IOException e) {
-                    System.out.println("Resume failed");
                     onError(entry, e.getMessage());
                 }
             }));
@@ -49,7 +47,7 @@ class Downloader {
     }
 
     private void onError(Task entry, String message){
-        System.out.println("Failed to download file -- " + message);
+        System.out.println("Download aborted -- No internet connection: " + message);
         entry.getStatus().failed();
     }
 

@@ -21,29 +21,6 @@ public class ProtocolHttp implements Protocol {
             downloadFromUrl(task, task.getUrl());
         } catch (UnexpectedResponseException e) {
             if (e.getResponseCode() == 302 || e.getResponseCode() == 301) {
-package team1.downloader;
-
-import team1.downloader.misc.exceptions.InvalidUrlException;
-import team1.downloader.misc.exceptions.UnexpectedResponseException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
-public class ProtocolHttp implements Protocol {
-    private static final int BUFFER_SIZE = 4096;
-    private final List<Processor> processors = new ArrayList<>();
-
-    @Override
-    public void download(Task task) throws IOException {
-        try {
-            downloadFromUrl(task, task.getUrl());
-        } catch (UnexpectedResponseException e) {
-            if (e.getResponseCode() == 302 || e.getResponseCode() == 301) {
                 try {
                     downloadFromUrl(task, e.getLocation());
                 } catch (UnexpectedResponseException e1) {
@@ -66,6 +43,7 @@ public class ProtocolHttp implements Protocol {
 
         try {
             connection = (HttpURLConnection) new URL(url).openConnection();
+            connection.setReadTimeout(10000); // 10 sec
             long totalBytesRead = task.getFile().length();
             connection.setRequestProperty("Range", getRangeHeader(totalBytesRead));
             connection.setRequestProperty("Group", "1");
@@ -106,12 +84,6 @@ public class ProtocolHttp implements Protocol {
         task.updateStatus(new TaskStatus(totalSize, sizeDownloaded));
         this.processors.forEach(processor -> processor.onProgress(task));
     }
-
-    public void subscribe(Processor processor) {
-        this.processors.add(processor);
-    }
-}
-
 
     public void subscribe(Processor processor) {
         this.processors.add(processor);
