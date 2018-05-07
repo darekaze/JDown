@@ -43,7 +43,8 @@ public class ProtocolHttp implements Protocol {
 
         try {
             connection = (HttpURLConnection) new URL(url).openConnection();
-            connection.setReadTimeout(10000); // 10 sec
+            connection.setConnectTimeout(15000); // 15 sec for connection
+            connection.setReadTimeout(10000); // 10 sec for data receiving
             long totalBytesRead = task.getFile().length();
             connection.setRequestProperty("Range", getRangeHeader(totalBytesRead));
             connection.setRequestProperty("Group", "1");
