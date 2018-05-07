@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ProtocolHttp implements Protocol {
     private static final int BUFFER_SIZE = 4096;
-    private static final int SOCKET_TIMEOUT = 15000;
+    private static final int SOCKET_TIMEOUT = 4000;
     private final List<Processor> processors = new ArrayList<>();
 
     @Override

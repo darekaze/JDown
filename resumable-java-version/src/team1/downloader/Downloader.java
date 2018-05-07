@@ -15,40 +15,50 @@ class Downloader {
         this.executor = executor;
     }
 
-    public void download(Task entry) {
-        if (!downloads.containsKey(entry))
-            downloads.put(entry, executor.submit(() -> {
+    public void download(Task task) {
+        if (!downloads.containsKey(task))
+            downloads.put(task, executor.submit(() -> {
                 try {
-                    protocol.download(entry);
+                    protocol.download(task);
                 } catch (IOException e) {
-                    onError(entry, e.getMessage());
+                    onError(task, e.getMessage());
                 }
             }));
     }
 
-    public void pause(Task entry) {
-        if (this.downloads.containsKey(entry))
-            this.downloads.get(entry).cancel(true);
+    public void pause(Task task) {
+        if (this.downloads.containsKey(task))
+            this.downloads.get(task).cancel(true);
     }
 
-    public void resume(Task entry) {
-        if (downloads.containsKey(entry))
-            downloads.put(entry, executor.submit(() -> {
+    public void resume(Task task) {
+        if (downloads.containsKey(task))
+            downloads.put(task, executor.submit(() -> {
                 try {
-                    protocol.download(entry);
+                    protocol.download(task);
                 } catch (IOException e) {
-                    onError(entry, e.getMessage());
+                    onError(task, e.getMessage());
                 }
             }));
     }
 
-    public boolean isPaused(Task entry) {
-        return this.downloads.containsKey(entry) && this.downloads.get(entry).isCancelled();
+    public boolean isPaused(Task task) {
+        return this.downloads.containsKey(task) && this.downloads.get(task).isCancelled();
     }
 
-    private void onError(Task entry, String message){
-        System.out.println("Download aborted -- No internet connection: " + message);
-        entry.getStatus().failed();
+    private void onError(Task task, String message){
+        pause(task);
+        System.out.println("Download aborted: " + message);
+        System.out.println("-- No internet connection: Attempt to reconnect in 5 seconds");
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        resume(task);
+                    }
+                },
+                5000
+        );
+//        task.getStatus().failed();
     }
-
 }
