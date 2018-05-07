@@ -6,13 +6,6 @@ WiP
 
 ## Java version Instruction (team1.downloader)
 
-### Remaining things to fix (Need help)
-
-1. Fix detect timeout and reconnect for connections that don't have internet (Use mobile hotspot to test)
-2. Bonus: add the function to be able to reconnect at run-time
-
----
-
 In IDE (IntelliJ), You need to add the 2 arguments in the setting config.
 
 ```
