@@ -1,6 +1,7 @@
 # compatible with Python 3
 import os
 import shutil
+import time
 import urllib.error
 import urllib.request
 
@@ -104,14 +105,15 @@ def download(url="http://158.132.255.107:25003/project/team1.txt", file_path=Non
                     }
                     req = urllib.request.Request(url, headers=headers)
                     page = opener.open(req, timeout=timeout).read()
-                    print(percentage(last_byte, file_size))
-
                     with open(tmp_file_path, "ab") as f:
                         f.write(page)
                     first_byte = last_byte + 1
+
+                    print(percentage(last_byte, file_size))
                 except Exception as e:
-                    print("Caught Error: " + str(e))
-                    print("Retry...")
+                    print(e)
+                    print("The downloader will retry after 3 seconds...")
+                    time.sleep(3)
 
     except urllib.error.HTTPError as e:
         print("Server returned an error! Code:", str(e.code))
