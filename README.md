@@ -6,26 +6,21 @@ WiP
 
 ## Java version Instruction (team1.downloader)
 
-In IDE (IntelliJ), You need to add the 2 arguments in the setting config.
-
+Build this project as .jar and execute the following command in terminal (where you .jar file is located):
 ```
-"<url>" <path> 
-```
-
-You can also do this if possible:
-```
-cd ./COMP2322-Proj/resumable-java-version/out/production/resumable-java-version
-java team1.downloader.AppMain "<url>" <path>
+java -jar team1-downloader.jar "<url>" <path>
 ```
 
-<s>For Build version (will update later), type the following command in a command prompt:</s>  
+### Testing - downloading node.js package
 
-<s>`./JDown "<url>" <path>`</s> TBC with Grandle
-
-### Use this for testing - downloading node.js package
-
+With raw java class:
 ```
-java team1.downloader.AppMain "https://nodejs.org/dist/v8.11.1/node-v8.11.1-linux-x64.tar.xz" /home/darekaze/Downloads
+java team1.downloader.AppMain "https://nodejs.org/dist/v8.11.1/node-v8.11.1-linux-x64.tar.xz" ./test-dir
+```
+
+With .jar package:
+```
+java -jar team1-downloader.jar "https://nodejs.org/dist/v8.11.1/node-v8.11.1-linux-x64.tar.xz" ./test-dir
 ```
 
 #### Notes:
