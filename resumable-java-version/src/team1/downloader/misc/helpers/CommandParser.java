@@ -1,4 +1,4 @@
-package team1.downloader.misc.parsers;
+package team1.downloader.misc.helpers;
 
 import team1.downloader.Entries;
 import team1.downloader.misc.exceptions.InvalidCommandException;

@@ -2,11 +2,11 @@
 
 ## Python version
 
-WiP
+Simply run the main.py in Python 3 to execute the program
 
 ## Java version Instruction (team1.downloader)
 
-Build this project as .jar and execute the following command in terminal (where you .jar file is located):
+Build this project as '.jar' and execute the following command in terminal (where you .jar file is located):
 ```
 java -jar team1-downloader.jar "<url>" <path>
 ```

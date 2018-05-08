@@ -1,4 +1,4 @@
-package team1.downloader.misc.parsers;
+package team1.downloader.misc.helpers;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
-public class RenameParser {
+public class RenameHandler {
     private File file;
 
     public void renameFile() {
@@ -14,7 +14,7 @@ public class RenameParser {
         Path source = this.file.toPath();
         File nf = new File(this.file.getParent() + File.separator + formattedName);
         try {
-            nf.createNewFile(); // For the sake of windows
+            nf.createNewFile(); // compatibility for windows
             Files.move(source, source.resolveSibling(formattedName), REPLACE_EXISTING);
         } catch (IOException e) {
             e.printStackTrace();

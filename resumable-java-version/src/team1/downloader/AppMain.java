@@ -1,8 +1,8 @@
 package team1.downloader;
 
 import team1.downloader.misc.exceptions.InvalidCommandException;
-import team1.downloader.misc.parsers.CommandParser;
-import team1.downloader.misc.parsers.RenameParser;
+import team1.downloader.misc.helpers.CommandParser;
+import team1.downloader.misc.helpers.RenameHandler;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -11,7 +11,7 @@ class AppMain {
     public static void main(String[] args) {
         ProtocolHttp protocol = new ProtocolHttp();
         ProcessController controller = new ProcessController();
-        RenameParser re = new RenameParser();
+        RenameHandler re = new RenameHandler();
 
         protocol.subscribe(new ProcessBar());
         try {

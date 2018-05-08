@@ -1,6 +1,6 @@
 package team1.downloader;
 
-import team1.downloader.misc.parsers.FileNameParser;
+import team1.downloader.misc.helpers.FileNameParser;
 
 import java.io.File;
 import java.util.Optional;
