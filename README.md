@@ -1,17 +1,19 @@
 # COMP2322 Project - Resumable HTTP Downloader
 
-## Python version
+## Instructions
+
+### Python version (team1.py)
 
 Simply run the main.py in Python 3 to execute the program
 
-## Java version Instruction (team1.downloader)
+### Java version (team1.downloader)
 
 Build this project as '.jar' and execute the following command in terminal (where you .jar file is located):
 ```
 java -jar team1-downloader.jar "<url>" <path>
 ```
 
-### Testing - downloading node.js package
+#### Testing - downloading node.js package
 
 With raw java class:
 ```
