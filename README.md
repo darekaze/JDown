@@ -8,7 +8,7 @@
 
 Simply run the team1.py in Python 3 to execute the program
 
-### Java version (team1.downloader)
+### Java version (JDown)
 
 Build this project as '.jar' and execute the following command in terminal (where you .jar file is located):
 ```
