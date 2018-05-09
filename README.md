@@ -4,7 +4,7 @@
 
 ### Python version (team1.py)
 
-Simply run the main.py in Python 3 to execute the program
+Simply run the team1.py in Python 3 to execute the program
 
 ### Java version (team1.downloader)
 
@@ -13,7 +13,12 @@ Build this project as '.jar' and execute the following command in terminal (wher
 java -jar team1-downloader.jar "<url>" <path>
 ```
 
-#### Testing - downloading node.js package
+Alternatively, you can use javac to compile all java files and run this command:
+```
+java team1.downloader.AppMain "<url>" <path>
+```
+
+#### Testing - download node.js package
 
 With raw java class:
 ```
