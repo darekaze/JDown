@@ -43,4 +43,5 @@ python pyDown.py
 
 Then type in the URL to start downloading your file
 
-
+> This is the improved mirror from https://github.com/CrabAss/COMP2322-Proj  
+> Also give thanks to [@TCtower](https://github.com/TCtower) and [@CrabAss](https://github.com/CrabAss)
