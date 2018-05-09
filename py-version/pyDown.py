@@ -1,4 +1,3 @@
-# compatible with Python 3
 import os
 import shutil
 import time
@@ -11,6 +10,7 @@ size_unit = ("B", "KB", "MB", "GB", "TB")
 class NoRedirection(urllib.request.HTTPErrorProcessor):
     def http_response(self, request, response):
         return response
+
     https_response = http_response
 
 
@@ -38,8 +38,7 @@ def check_url(url):
             return res
 
 
-def download(url="http://158.132.255.107:25003/project/team1.txt", file_path=None, timeout=10):
-
+def download(url, file_path=None, timeout=5):
     file_size = -1
     tmp_file_path = None
 
@@ -47,7 +46,7 @@ def download(url="http://158.132.255.107:25003/project/team1.txt", file_path=Non
         first_response = check_url(url)
         url = first_response.geturl()
 
-        if file_path is None:   # Extract remote filename automatically
+        if file_path is None:  # Extract remote filename automatically
             remote_filename = url.split("/")[-1].split("?")[0]
             if remote_filename == "":
                 remote_filename = "index"
@@ -61,7 +60,7 @@ def download(url="http://158.132.255.107:25003/project/team1.txt", file_path=Non
             else:
                 os.remove(file_path)
 
-        tmp_file_path = file_path + ".part"     # temp file
+        tmp_file_path = file_path + ".part"  # temp file
 
         print("\nRemote URL: " + str(url))
 
@@ -133,5 +132,10 @@ def download(url="http://158.132.255.107:25003/project/team1.txt", file_path=Non
     return
 
 
-print("Resumable HTTP Downloader\nGroup 1, COMP2322, PolyU\n")
-download()
+def main():
+    url_string = input('URL: ')
+    download(url_string)
+
+
+if __name__ == '__main__':
+    main()
