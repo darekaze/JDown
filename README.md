@@ -1,4 +1,6 @@
-# COMP2322 Project - Resumable HTTP Downloader
+# Resumable HTTP Downloader
+
+> COMP2322 Project
 
 ## Instructions
 
@@ -13,17 +15,7 @@ Build this project as '.jar' and execute the following command in terminal (wher
 java -jar team1-downloader.jar "<url>" <path>
 ```
 
-Alternatively, you can use javac to compile all java files and run this command:
-```
-java team1.downloader.AppMain "<url>" <path>
-```
-
 #### Testing - download node.js package
-
-With raw java class:
-```
-java team1.downloader.AppMain "https://nodejs.org/dist/v8.11.1/node-v8.11.1-linux-x64.tar.xz" ./test-dir
-```
 
 With .jar package:
 ```
