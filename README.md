@@ -2,10 +2,9 @@
 
 > COMP2322 Project
 
-## Java version (JDown.jar)
+**NOTE: Since I no longer write any Java code, this repo will NO longer be maintained.**
 
-This is the real automated resumable downloader written in Java. Blazing fast in downloading files.  
--- Recommended version.
+An automated resumable downloader written in Java. Blazing fast in downloading files.
 
 ### Instructions
 
@@ -26,22 +25,5 @@ java -jar JDown.jar "https://nodejs.org/dist/v8.11.1/node-v8.11.1-linux-x64.tar.
 1. RenameFile does not work in Windows root directory, please download the file into a folder.
 2. Windows cmd (or PowerShell) does not support ASCII Escape codes for removing the console line (Which is a Terminal standard that Windows does not followed). This is for better visual effect. Therefore, we recommend to use bash terminal to execute the program.
 
----
-
-## Python version (pyDown.py)
-
-This is the prototype version of the resumable downloader  
--- Not recommended to use (However, you can try it)
-
-### Instructions
-
-Simply run the pyDown.py in Python 3
-
-```
-python pyDown.py
-```
-
-Then type in the URL to start downloading your file
-
-> This is the improved mirror from https://github.com/CrabAss/COMP2322-Proj  
+> This is the improved mirror from [here](https://github.com/CrabAss/COMP2322-Proj)
 > Also give thanks to [@TCtower](https://github.com/TCtower) and [@CrabAss](https://github.com/CrabAss)
